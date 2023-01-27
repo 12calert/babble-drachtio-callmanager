@@ -6,8 +6,8 @@ const call = require( "../../lib/call.js" )
 
 describe( "sdp", function() {
 
-  it( `create new sdp object`, async function() {
-    let s = sdp.create()
+  it( "create new sdp object", async function() {
+    const s = sdp.create()
 
     /* check basic strcture */
     expect( s.sdp ).to.have.property( "version" ).that.is.a( "number" ).to.equal( 0 )
@@ -18,9 +18,9 @@ describe( "sdp", function() {
     expect( s.sdp ).to.have.property( "media" ).that.is.a( "array" ).to.have.lengthOf( 1 )
   } )
 
-  it( `pcma intersection`, async function() {
+  it( "pcma intersection", async function() {
 
-    let testsdp = `v=0
+    const testsdp = `v=0
 o=- 1608235282228 0 IN IP4 127.0.0.1
 s=
 c=IN IP4 192.168.0.141
@@ -34,9 +34,9 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
   } )
 
-  it( `pcma intersection`, async function() {
+  it( "pcma intersection", async function() {
 
-    let testsdp = `v=0
+    const testsdp = `v=0
 o=Z 1608236465345 1 IN IP4 192.168.0.141
 s=Z
 c=IN IP4 192.168.0.141
@@ -60,10 +60,10 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
   } )
 
-  it( `generate sdp from object pcma`, async function() {
+  it( "generate sdp from object pcma", async function() {
 
     /* Setsession id only to permorm the test - normally use the default changing one */
-    let newsdp = sdp.create().setsessionid( 0 ).addcodecs( "pcma" ).setconnectionaddress( "192.168.0.100" ).toString()
+    const newsdp = sdp.create().setsessionid( 0 ).addcodecs( "pcma" ).setconnectionaddress( "192.168.0.100" ).toString()
 
     expect( newsdp ).to.equal( "v=0\r\n" +
       "o=- 0 0 IN IP4 127.0.0.1\r\n" +
@@ -76,8 +76,8 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
       "a=sendrecv\r\n" )
   } )
 
-  it( `generate sdp from object ilbc pcma`, async function() {
-    let newsdp = sdp.create().setsessionid( 0 ).addcodecs( "ilbc pcma" ).toString()
+  it( "generate sdp from object ilbc pcma", async function() {
+    const newsdp = sdp.create().setsessionid( 0 ).addcodecs( "ilbc pcma" ).toString()
 
     expect( newsdp ).to.equal( "v=0\r\n" +
       "o=- 0 0 IN IP4 127.0.0.1\r\n" +
@@ -92,9 +92,9 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
       "a=sendrecv\r\n" )
   } )
 
-  it( `don't duplicate codec request`, async function() {
+  it( "don't duplicate codec request", async function() {
 
-    let newsdp = sdp.create().setsessionid( 0 ).addcodecs( "ilbc ilbc pcma" ).toString()
+    const newsdp = sdp.create().setsessionid( 0 ).addcodecs( "ilbc ilbc pcma" ).toString()
 
     expect( newsdp ).to.equal( "v=0\r\n" +
       "o=- 0 0 IN IP4 127.0.0.1\r\n" +
@@ -109,9 +109,9 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
       "a=sendrecv\r\n" )
   } )
 
-  it( `exclude a ptime of 30`, async function() {
+  it( "exclude a ptime of 30", async function() {
 
-    let testsdp = `v=0
+    const testsdp = `v=0
 o=Z 1608292844058 1 IN IP4 192.168.0.141
 s=Z
 c=IN IP4 192.168.0.141
@@ -131,9 +131,9 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
   } )
 
-  it( `looking for pcma`, async function() {
+  it( "looking for pcma", async function() {
 
-    let testsdp = `v=0
+    const testsdp = `v=0
 o=Z 1608303841226 1 IN IP4 192.168.0.141
 s=Z
 c=IN IP4 192.168.0.141
@@ -146,9 +146,9 @@ a=sendrecv`
     expect( sdp.create( testsdp ).intersection( "pcmu pcma" ) ).to.equal( "pcma" )
   } )
 
-  it( `looking for g722`, async function() {
+  it( "looking for g722", async function() {
 
-    let testsdp = `v=0
+    const testsdp = `v=0
 o=Z 1610744131900 1 IN IP4 127.0.0.1
 s=Z
 c=IN IP4 127.0.0.1
@@ -164,7 +164,7 @@ a=rtpmap:18 G729/8000
 a=fmtp:18 annexb=no
 a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
-    let remote = sdp.create( testsdp )
+    const remote = sdp.create( testsdp )
     expect( remote.intersection( "g722 pcmu", true ) ).to.equal( "g722" )
 
     remote.setaudiodirection( "inactive" )
@@ -187,8 +187,8 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     )
   } )
 
-  it( `sdp member functions`, async function() {
-    let testsdp = `v=0
+  it( "sdp member functions", async function() {
+    const testsdp = `v=0
 o=Z 1610744131900 1 IN IP4 127.0.0.1
 s=Z
 c=IN IP4 192.168.0.100
@@ -205,15 +205,15 @@ a=fmtp:18 annexb=no
 a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
 
-    let oursdp = sdp.create( testsdp )
+    const oursdp = sdp.create( testsdp )
 
-    let a = oursdp.getaudio()
+    const a = oursdp.getaudio()
     expect( a.port ).to.equal( 56858 )
     expect( a.address ).to.equal( "192.168.0.100" )
 
   } )
 
-  it( `sdp webrtc parse`, async function() {
+  it( "sdp webrtc parse", async function() {
 
     const testsdp = `v=0
 o=- 5012137047437522294 2 IN IP4 127.0.0.1
@@ -261,7 +261,7 @@ a=ssrc:2706351154 msid:XjKU0noZQudw5wysGsQOsBwJVp0Dk9PbZxHw 83ac3abd-cc86-427a-9
 a=ssrc:2706351154 mslabel:XjKU0noZQudw5wysGsQOsBwJVp0Dk9PbZxHw
 a=ssrc:2706351154 label:83ac3abd-cc86-427a-9cb7-ebac0c73964a`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
-    let oursdp = sdp.create( testsdp )
+    const oursdp = sdp.create( testsdp )
 
     expect( oursdp.sdp.media[ 0 ].fingerprint.hash )
       .to.equal( "D7:88:04:4B:B1:F2:B1:B3:ED:58:49:0C:31:5A:1D:E2:D3:1F:2D:43:FF:74:8E:9B:97:1F:E7:61:BE:27:62:3A" )
@@ -270,16 +270,16 @@ a=ssrc:2706351154 label:83ac3abd-cc86-427a-9cb7-ebac0c73964a`.replace(/(\r\n|\n|
 
   } )
 
-  it( `sdp webrtc generate`, async function() {
+  it( "sdp webrtc generate", async function() {
     
-    let oursdp = sdp.create()
-              .addcodecs( "pcma" )
-              .setconnectionaddress( "127.0.0.1" )
-              .setaudioport( 4 )
-              .addssrc( 44 )
-              .secure( "ourfingerprint", "act" )
-              .addicecandidates( "127.0.0.1", 4 )
-              .rtcpmux()
+    const oursdp = sdp.create()
+      .addcodecs( "pcma" )
+      .setconnectionaddress( "127.0.0.1" )
+      .setaudioport( 4 )
+      .addssrc( 44 )
+      .secure( "ourfingerprint", "act" )
+      .addicecandidates( "127.0.0.1", 4 )
+      .rtcpmux()
     
     expect( oursdp.sdp.media[ 0 ].rtcpMux ).to.equal( "rtcp-mux" )
     expect( oursdp.sdp.media[ 0 ].fingerprint.type ).to.equal( "sha-256" )
@@ -295,23 +295,7 @@ a=ssrc:2706351154 label:83ac3abd-cc86-427a-9cb7-ebac0c73964a`.replace(/(\r\n|\n|
     expect( oursdp.sdp.media[ 0 ].candidates[ 0 ].generation ).to.equal( 0 )
   } )
 
-  it( `sdp pcma real life sdp avon`, async function() {
-  const testsdp = `v=0
-o=MTLSBC 1657399906 1657399907 IN IP4 213.166.4.136
-s=SIP Call
-c=IN IP4 213.166.4.136
-t=0 0
-a=sendrecv
-m=audio 48380 RTP/AVP 8
-a=rtpmap:8 PCMA/8000`
-
-    let oursdp = sdp.create( testsdp )
-    let selectedcodec = oursdp.intersection( "g722 ilbc pcmu pcma", true )
-    expect( selectedcodec ).to.equal( "pcma" )
-
-  } )
-
-  it( `sdp pcma real life sdp getautdio avon`, async function() {
+  it( "sdp pcma real life sdp avon", async function() {
     const testsdp = `v=0
 o=MTLSBC 1657399906 1657399907 IN IP4 213.166.4.136
 s=SIP Call
@@ -321,17 +305,33 @@ a=sendrecv
 m=audio 48380 RTP/AVP 8
 a=rtpmap:8 PCMA/8000`
 
-    let oursdp = sdp.create( testsdp )
-    let remoteaudio = oursdp.getaudio()
+    const oursdp = sdp.create( testsdp )
+    const selectedcodec = oursdp.intersection( "g722 ilbc pcmu pcma", true )
+    expect( selectedcodec ).to.equal( "pcma" )
 
-    let def = call._createchannelremotedef( remoteaudio.address, remoteaudio.port, remoteaudio.audio.payloads[ 0 ] )
+  } )
+
+  it( "sdp pcma real life sdp getautdio avon", async function() {
+    const testsdp = `v=0
+o=MTLSBC 1657399906 1657399907 IN IP4 213.166.4.136
+s=SIP Call
+c=IN IP4 213.166.4.136
+t=0 0
+a=sendrecv
+m=audio 48380 RTP/AVP 8
+a=rtpmap:8 PCMA/8000`
+
+    const oursdp = sdp.create( testsdp )
+    const remoteaudio = oursdp.getaudio()
+
+    const def = call._createchannelremotedef( remoteaudio.address, remoteaudio.port, remoteaudio.audio.payloads[ 0 ] )
 
     expect( def.remote.address ).to.equal( "213.166.4.136" )
     expect( def.remote.port ).to.equal( 48380 )
     expect( def.remote.codec ).to.equal( 8 )
   } )
 
-  it( `another real life example`, async function() {
+  it( "another real life example", async function() {
     const testsdp = `v=0
 o=MTLSBC 1664810796 1664810796 IN IP4 213.166.4.133
 s=SIP Call
@@ -348,21 +348,21 @@ a=fmtp:101 0-16
 a=rtpmap:13 CN/8000
 a=ptime:20`
 
-    let oursdp = sdp.create( testsdp )
+    const oursdp = sdp.create( testsdp )
 
     let selectedcodec = oursdp.intersection( "g722", true )
     console.log("selectedcodec",selectedcodec)
     return
     selectedcodec = oursdp.intersection( "g722", true )
-    let remoteaudio = oursdp.getaudio()
+    const remoteaudio = oursdp.getaudio()
 
     oursdp.select( selectedcodec )
 
-    let ourlocalsdp = sdp.create()
-                .addcodecs( selectedcodec )
-                .addcodecs( "2833" )
-                .setconnectionaddress( "1.1.1.1" )
-                .setaudioport( 1000 )
+    const ourlocalsdp = sdp.create()
+      .addcodecs( selectedcodec )
+      .addcodecs( "2833" )
+      .setconnectionaddress( "1.1.1.1" )
+      .setaudioport( 1000 )
 
     console.log(ourlocalsdp.toString())
 

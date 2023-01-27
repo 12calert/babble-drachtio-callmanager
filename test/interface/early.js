@@ -22,7 +22,7 @@ describe( "call early", function() {
   } )
 
 
-  it( `Create call and send 183 - early basic`, async () => {
+  it( "Create call and send 183 - early basic", async () => {
 
     /*
     Phone                 BV                   Gateway
@@ -37,10 +37,10 @@ describe( "call early", function() {
     */
 
     /* Setup the mock RTP server */ 
-    let srfscenario = new srf.srfscenario()
-    let rtpserver = callmanager.projectrtp.proxy.listen()
+    const srfscenario = new srf.srfscenario()
+    const rtpserver = callmanager.projectrtp.proxy.listen()
 
-    let connection = net.createConnection( 9002, "127.0.0.1" )
+    const connection = net.createConnection( 9002, "127.0.0.1" )
       .on( "error", ( e ) => {
         console.error( e )
       } )
@@ -51,8 +51,8 @@ describe( "call early", function() {
     } )
 
     let mixing
-    let messagestate = projectrtpmessage.newstate()
-    let channelmessages = []
+    const messagestate = projectrtpmessage.newstate()
+    const channelmessages = []
     let opencount = 0
     
     connection.on( "data", ( data ) => {
@@ -66,11 +66,11 @@ describe( "call early", function() {
                   projectrtpmessage.createmessage( 
                     {"local":{"port":10008,"dtls":
                       {"fingerprint":"Some fingerprint","enabled":false},
-                      "address":"192.168.0.141"},
-                      "id": msg.id, 
-                      "uuid": uuidv4(),
-                      "action":"open",
-                      "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
+                    "address":"192.168.0.141"},
+                    "id": msg.id, 
+                    "uuid": uuidv4(),
+                    "action":"open",
+                    "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
                     } ) ), 2 )
             } else {
               setTimeout( () => 
@@ -78,11 +78,11 @@ describe( "call early", function() {
                   projectrtpmessage.createmessage( 
                     {"local":{"port": 10010,"dtls":
                       {"fingerprint":"Some fingerprint","enabled":false},
-                      "address":"192.168.0.141"},
-                      "id": msg.id, 
-                      "uuid": uuidv4(),
-                      "action":"open",
-                      "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
+                    "address":"192.168.0.141"},
+                    "id": msg.id, 
+                    "uuid": uuidv4(),
+                    "action":"open",
+                    "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
                     } ) ), 2 )
             }
             opencount++
@@ -123,7 +123,7 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     } )
 
     /* Step 1. Phone sends INVITE */
-    let call = await new Promise( ( resolve ) => {
+    const call = await new Promise( ( resolve ) => {
       srfscenario.oncall( async ( call ) => { resolve( call ) } )
       srfscenario.inbound()
     } )
@@ -137,7 +137,7 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
 
     /* Step 2. New INVITE to the remote Gateway */
-    let newcall = await call.newuac( { "contact": "callto" } )
+    const newcall = await call.newuac( { "contact": "callto" } )
     
     await call._onhangup( "wire" )
     
@@ -163,7 +163,7 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     rtpserver.destroy()
   } )
 
-  it( `Create call and send 183 - early - SAVPF`, async () => {
+  it( "Create call and send 183 - early - SAVPF", async () => {
 
     /*
     Phone (SAVPF)         BV                   Gateway
@@ -174,10 +174,10 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     */
 
     /* Setup the mock RTP server */ 
-    let srfscenario = new srf.srfscenario( { savpf: true } )
-    let rtpserver = callmanager.projectrtp.proxy.listen()
+    const srfscenario = new srf.srfscenario( { savpf: true } )
+    const rtpserver = callmanager.projectrtp.proxy.listen()
 
-    let connection = net.createConnection( 9002, "127.0.0.1" )
+    const connection = net.createConnection( 9002, "127.0.0.1" )
       .on( "error", ( e ) => {
         console.error( e )
       } )
@@ -188,8 +188,8 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     } )
 
     let mixing
-    let messagestate = projectrtpmessage.newstate()
-    let channelmessages = []
+    const messagestate = projectrtpmessage.newstate()
+    const channelmessages = []
     let opencount = 0
     
     connection.on( "data", ( data ) => {
@@ -203,11 +203,11 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
                   projectrtpmessage.createmessage( 
                     {"local":{"port":10008,"dtls":
                       {"fingerprint":"Some fingerprint","enabled":false},
-                      "address":"192.168.0.141"},
-                      "id": msg.id, 
-                      "uuid": uuidv4(),
-                      "action":"open",
-                      "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
+                    "address":"192.168.0.141"},
+                    "id": msg.id, 
+                    "uuid": uuidv4(),
+                    "action":"open",
+                    "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
                     } ) ), 2 )
             } else {
               setTimeout( () => 
@@ -215,11 +215,11 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
                   projectrtpmessage.createmessage( 
                     {"local":{"port": 10010,"dtls":
                       {"fingerprint":"Some fingerprint","enabled":false},
-                      "address":"192.168.0.141"},
-                      "id": msg.id, 
-                      "uuid": uuidv4(),
-                      "action":"open",
-                      "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
+                    "address":"192.168.0.141"},
+                    "id": msg.id, 
+                    "uuid": uuidv4(),
+                    "action":"open",
+                    "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
                     } ) ), 2 )
             }
             opencount++
@@ -260,15 +260,15 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     } )
 
     /* Step 1. Phone sends INVITE */
-    let call = await new Promise( ( resolve ) => {
+    const call = await new Promise( ( resolve ) => {
       srfscenario.oncall( async ( call ) => { resolve( call ) } )
 
-      let req = new srf.req( { savpf: true } )
+      const req = new srf.req( { savpf: true } )
       req.setparsedheader( "contact", [ {
-          name: undefined,
-          uri: 'sip:u3s2etdo@pc3lfsq1oh86.invalid;transport=ws;ob',
-          params: {}
-        }
+        name: undefined,
+        uri: "sip:u3s2etdo@pc3lfsq1oh86.invalid;transport=ws;ob",
+        params: {}
+      }
       ] )
 
       srfscenario.inbound( req )
@@ -283,7 +283,7 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
 
     /* Step 2. New INVITE to the remote Gateway */
-    let newcall = await call.newuac( { "contact": "callto" } )
+    const newcall = await call.newuac( { "contact": "callto" } )
     
     await call._onhangup( "wire" )
     
@@ -309,7 +309,7 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
   } )
 
 
-  it( `Create call and send 183 - early - SAVPF and 200 ok`, async () => {
+  it( "Create call and send 183 - early - SAVPF and 200 ok", async () => {
 
     /**
      * Markdown - mermaid
@@ -327,10 +327,10 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
      */
 
     /* Setup the mock RTP server */ 
-    let srfscenario = new srf.srfscenario( { savpf: true } )
-    let rtpserver = callmanager.projectrtp.proxy.listen()
+    const srfscenario = new srf.srfscenario( { savpf: true } )
+    const rtpserver = callmanager.projectrtp.proxy.listen()
 
-    let connection = net.createConnection( 9002, "127.0.0.1" )
+    const connection = net.createConnection( 9002, "127.0.0.1" )
       .on( "error", ( e ) => {
         console.error( e )
       } )
@@ -341,8 +341,8 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     } )
 
     let mixing
-    let messagestate = projectrtpmessage.newstate()
-    let channelmessages = []
+    const messagestate = projectrtpmessage.newstate()
+    const channelmessages = []
     let opencount = 0
     
     connection.on( "data", ( data ) => {
@@ -356,11 +356,11 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
                   projectrtpmessage.createmessage( 
                     {"local":{"port":10008,"dtls":
                       {"fingerprint":"Some fingerprint","enabled":false},
-                      "address":"192.168.0.141"},
-                      "id": msg.id, 
-                      "uuid": uuidv4(),
-                      "action":"open",
-                      "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
+                    "address":"192.168.0.141"},
+                    "id": msg.id, 
+                    "uuid": uuidv4(),
+                    "action":"open",
+                    "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
                     } ) ), 2 )
             } else {
               setTimeout( () => 
@@ -368,11 +368,11 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
                   projectrtpmessage.createmessage( 
                     {"local":{"port": 10010,"dtls":
                       {"fingerprint":"Some fingerprint","enabled":false},
-                      "address":"192.168.0.141"},
-                      "id": msg.id, 
-                      "uuid": uuidv4(),
-                      "action":"open",
-                      "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
+                    "address":"192.168.0.141"},
+                    "id": msg.id, 
+                    "uuid": uuidv4(),
+                    "action":"open",
+                    "status":{"channel":{"available":4995,"current":5},"workercount":12,"instance":"ca0ef6a9-9174-444d-bdeb-4c9eb54d4566"}
                     } ) ), 2 )
             }
             opencount++
@@ -390,12 +390,12 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     /* ensure we are connected */
     await new Promise( ( r ) => setTimeout( () => r(), 100 ) )
 
-    let req = new srf.req( { savpf: true } )
+    const req = new srf.req( { savpf: true } )
     req.setparsedheader( "contact", [ {
-        name: undefined,
-        uri: 'sip:u3s2etdo@pc3lfsq1oh86.invalid;transport=ws;ob',
-        params: {}
-      }
+      name: undefined,
+      uri: "sip:u3s2etdo@pc3lfsq1oh86.invalid;transport=ws;ob",
+      params: {}
+    }
     ] )
 
     srfscenario.oncreateUAC( async ( contact, options, callbacks ) => {
@@ -421,7 +421,7 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
     } )
 
     /* Step 1. Phone sends INVITE */
-    let call = await new Promise( ( resolve ) => {
+    const call = await new Promise( ( resolve ) => {
       srfscenario.oncall( async ( call ) => { resolve( call ) } )
       srfscenario.inbound( req )
     } )
@@ -435,7 +435,7 @@ a=sendrecv`.replace(/(\r\n|\n|\r)/gm, "\r\n")
 
 
     /* Step 2. New INVITE to the remote Gateway */
-    let newcall = await call.newuac( { "contact": "callto" } )
+    const newcall = await call.newuac( { "contact": "callto" } )
     
     await new Promise( ( r ) => setTimeout( () => r(), 500 ) )
     await call._onhangup( "wire" )

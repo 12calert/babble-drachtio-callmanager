@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --recursive --check-leaks",
-    "docs": "jsdoc -c jsdoc.conf.json"
+    "docs": "jsdoc -c jsdoc.conf.json",
+    "check": "tsc --checkJs --noEmit --target es6 --module commonjs --skipLibCheck *.js test/**/*.js; ./node_modules/eslint/bin/eslint.js ./"
   },
   "author": "Nick Knight <nick@babblevoice.com>",
   "repository": {
@@ -36,5 +37,14 @@
   "directories": {
     "lib": "lib",
     "test": "test"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "eslint": "^8.32.0",
+    "eslint-config-standard-with-typescript": "^32.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "typescript": "^4.9.4"
   }
 }

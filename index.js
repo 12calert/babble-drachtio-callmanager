@@ -21,7 +21,7 @@ const default_options = {
 @returns { callmanager }
 */
 module.exports.callmanager = ( options ) => {
-  let ouroptions = { ...default_options, ...options }
+  const ouroptions = { ...default_options, ...options }
   return callmanager.callmanager( ouroptions )
 }
 
@@ -43,4 +43,4 @@ module.exports.store = store
 /**
  * Call
  */
- module.exports.call = callmanager.call
+module.exports.call = callmanager.call

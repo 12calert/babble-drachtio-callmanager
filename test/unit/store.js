@@ -7,8 +7,8 @@ describe( "callmanager - store", function() {
     callstore.clear()
   } )
 
-  it( `simple store`, async function() {
-    let dummycall = {
+  it( "simple store", async function() {
+    const dummycall = {
       "uuid": "1",
       "_entity": {
         "uri": "1234@domain"
@@ -30,8 +30,8 @@ describe( "callmanager - store", function() {
     } )
   } )
 
-  it( `simple store with update of local tag`, async function() {
-    let dummycall = {
+  it( "simple store with update of local tag", async function() {
+    const dummycall = {
       "uuid": "1",
       "_entity": {
         "uri": "1234@domain"
@@ -62,20 +62,20 @@ describe( "callmanager - store", function() {
       "storebyentityrealm": 1
     } )
 
-    let searchfor = {
+    const searchfor = {
       "callid": "1234",
       "tags": {
         "local": dummycall.sip.tags.local,
         "remote": dummycall.sip.tags.remote
       }
     }
-    let call = await callstore.getbycallid( searchfor )
+    const call = await callstore.getbycallid( searchfor )
     expect( call._entity.uri ).to.be.equal( "1234@domain" )
   } )
 
-  it( `call set three calls add entity`, async function() {
+  it( "call set three calls add entity", async function() {
 
-    let dummycall1 = {
+    const dummycall1 = {
       "uuid": "1",
       "sip": {
         "callid": "1234",
@@ -86,7 +86,7 @@ describe( "callmanager - store", function() {
       }
     }
 
-    let dummycall2 = {
+    const dummycall2 = {
       "uuid": "2",
       "sip": {
         "callid": "224435",
@@ -97,7 +97,7 @@ describe( "callmanager - store", function() {
       }
     }
 
-    let dummycall3 = {
+    const dummycall3 = {
       "uuid": "3",
       "sip": {
         "callid": "555666",
@@ -140,10 +140,10 @@ describe( "callmanager - store", function() {
       "storebyentityrealm": 1
     } )
 
-    let c = await callstore.getbycallid( dummycall1.sip )
+    const c = await callstore.getbycallid( dummycall1.sip )
     expect( c.uuid ).to.equal( "1" )
 
-    let ce = await callstore.getbyentity( dummycall1._entity.uri ) // Map
+    const ce = await callstore.getbyentity( dummycall1._entity.uri ) // Map
     expect( ce.get( dummycall1.uuid ).uuid ).to.equal( "1" )
 
     callstore.delete( dummycall1 )
