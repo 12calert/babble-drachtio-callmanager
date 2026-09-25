@@ -120,6 +120,14 @@ cm.on( "call", async ( c ) => {
 } )
 ```
 
+The call events are: `call.new`, `call.ringing`, `call.early`, `call.answered`, `call.updated`, `call.mix`, `call.auth.start`, `call.authed`, `call.authed.failed`, `call.hold`, `call.unhold`, `call.pick`, `call.destroyed`, `call.reporting`, `call.video.nomedia` and `call.video.media`.
+
+### Video no-media monitoring
+
+While a call is established with a video relay leg (projectrtp relay mode), its `livestats()` is polled for authenticated inbound video (`in.accepted + in.rtcp`). If that has not moved for `nomedia` mS the call emits `call.video.nomedia`; when video moves again it emits `call.video.media`. Both go to the call's emitter and the global one, with the call as the argument. Nothing is raised while the call is on hold, and a node without `livestats()` is never polled. An older relay build that reports only `in.count` is judged on that.
+
+`call.videomonitor` holds the latest stats (`stats`, sampled at `at`), the current state (`nomedia`) and a `history` of the events. The timing defaults to `{ interval: 2000, nomedia: 8000 }`. Override it with the `videomonitor` option, globally or per call. Keep `nomedia` under projectrtp's 20S relay idle timeout, which closes a dead leg.
+
 # Examples
 
 Authorise the call, sending ringing then answer. Once answered, echo RTP data back to the client.
